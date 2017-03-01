@@ -1,5 +1,5 @@
 # Valance
-A component driven framework for rapidly developing and deploying web, mobile, desktop, and console applications.
+A scalable framework for rapidly developing and deploying cross-platform applications. 
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
