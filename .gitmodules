@@ -1,0 +1,3 @@
+[submodule "src/archportal-interface"]
+	path = src/archportal-interface
+	url = https://androidinnovations.visualstudio.com/_git/archportal-interface
