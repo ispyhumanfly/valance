@@ -1,5 +1,5 @@
 # Valance
-A component driven approach to the rapid development and deployment of web, mobile, desktop, and console applications.
+A component driven framework for the rapid development and deployment of web, mobile, desktop, and console applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
