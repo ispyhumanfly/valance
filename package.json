@@ -1,7 +1,7 @@
 {
     "name": "valance",
     "version": "0.0.1",
-    "description": "",
+    "description": "A scalable framework for the rapid development and deployment of cross-platform applications.",
     "preferGlobal": true,
     "main": "index.js",
     "os": [
