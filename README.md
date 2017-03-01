@@ -1,5 +1,5 @@
 # Valance
-A micro-framework for the rapid development and deployment of easy to maintain Web, Mobile, Desktop, Telnet/SSH and Console applications.
+A micro-framework for the rapid development and deployment of easy to maintain Web, Mobile, Desktop, and Console applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
