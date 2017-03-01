@@ -1,17 +1,17 @@
 # Valance
-A lightweight framework for the rapid development and deployment of easy to maintain Web, Mobile, Desktop, Telnet/SSH and Console applications.
+A micro-framework for the rapid development and deployment of easy to maintain Web, Mobile, Desktop, Telnet/SSH and Console applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
 
-## Generate a starter application which will run on web, mobile and desktop platforms.
-    $ valance create --app-name MyApp --app-platform web mobile desktop
+## Use a Template application which will run on Web, Mobile and Desktop platforms.
+    $ valance template --app-name MyApp --app-platforms web mobile desktop
 
-## Serve web applications over a non-blocking and multi-core http server.
+## Host the Web interface of your application over a non-blocking and multi-core TCP server.
     $ valance host --app-home /path/to/app/home --app-cache /path/to/cache --app-logs /path/to/logs
 
-## Compile this stub to its device specific platforms.
-    $ valance build --app-home /path/to/app/home --app-platforms mobile desktop
+## Package the Desktop and Mobile applications for use on native devices.
+    $ valance package --app-home /path/to/app/home --app-platforms mobile desktop
 
 # Description
 Ea reprehenderit id pariatur commodo nostrud aute. Anim aliquip culpa et officia magna incididunt sit occaecat anim. Qui non nostrud esse consequat fugiat aute culpa qui adipisicing elit. Consectetur cillum do reprehenderit occaecat eiusmod exercitation nostrud tempor est.
@@ -53,10 +53,8 @@ Labore mollit irure tempor ad pariatur aute dolore culpa nulla amet do dolor ex 
 ## DigitalOcean
     One-Click Instructions
 
+# Author
+Dan Stephenson (ispyhumanfly@gmail.com)
+
 # License
 MIT
-
-# Copyright
-
-(c) 2017 Dan Stephenson (ispyhumanfly)
-
