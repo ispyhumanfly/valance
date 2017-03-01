@@ -1,5 +1,5 @@
 # Valance
-A scalable framework for rapidly developing and deploying cross-platform applications. 
+A scalable framework for the rapid development and deployment of cross-platform applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
