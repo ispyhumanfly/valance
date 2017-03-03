@@ -64,10 +64,12 @@ if (cluster.isMaster) {
     }))
 
     app.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
+    app.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
     app.use("/bootstrap", express.static(__dirname + "../node_modules/jquery/dist"))
+    app.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
+    app.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
     app.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
     app.use("/assets", express.static(__dirname + "/app/assets"))
-    app.use("/", express.static(__dirname + "/app/assets"))
 
     app.set("view engine", "pug")
     app.set("views", __dirname)
@@ -82,15 +84,29 @@ if (cluster.isMaster) {
     let event = new events.EventEmitter()
     event.on("synch", () => {this})
 
-    app.get("/:component", (req, res, next) => {
+    app.get("/:component", parser.urlencoded({ extended: true }), (req, res, next) => {
 
-        event.emit("synch",
-            req.cache.set("app",
-                JSON.stringify(jsonfile.readFileSync(__dirname + `/app/components/${req.params.component}.storage.json`))))
+        try {
+            event.emit("synch",
+                req.cache.set("app",
+                    JSON.stringify(jsonfile.readFileSync(__dirname + `/app/components/${req.params.component}.storage.json`))))
+        }
 
-        req.cache.get(`${req.params.component}`, (err, storage) => {
-            res.render(__dirname + `/app/components/${req.params.component}.template.pug`, JSON.parse(storage))
-        })
+        catch (err) {
+            if (err)
+                res.redirect("/errors")
+        }
+
+        try {
+
+            req.cache.get(`${req.params.component}`, (err, storage) => {
+                res.render(__dirname + `/app/components/${req.params.component}.template.pug`, JSON.parse(storage))
+            })
+        }
+        catch (err) {
+            if (err)
+                res.redirect("/errors")
+        }
     })
 
     app.get("/:component/storage/objects.json", (req, res, next) => {
