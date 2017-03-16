@@ -227,7 +227,7 @@ if (cluster.isMaster) {
         let git = exec("git rev-parse --short master")
         git = git.toString().trim()
 
-        console.log("Valance - Git: %s @ Processor: %d, Port: %d Application: %s",
+        console.log("Valance - Git: %s @ Processor: %d, Port: %d, Application: %s",
             git,
             cluster.worker.id,
             process.env.PORT || 8080,
