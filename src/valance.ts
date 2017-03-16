@@ -19,7 +19,7 @@ const argv = require("yargs")
 const jsonfile = require("jsonfile")
 const compression = require("compression")
 
-const application = argv.app
+const application = argv.application || process.env.VALANCE_APPLICATION || __dirname + "/application/"
 
 if (cluster.isMaster) {
 
@@ -35,6 +35,8 @@ if (cluster.isMaster) {
 } else {
 
     let app = express()
+
+    let app_home = application
 
     app.use(require("express-bunyan-logger")({
         name: "valance",
@@ -63,23 +65,23 @@ if (cluster.isMaster) {
         saveUninitialized: false
     }))
 
+    app.use("/assets", express.static(__dirname + "/app/assets"))
     app.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
     app.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
     app.use("/bootstrap", express.static(__dirname + "../node_modules/jquery/dist"))
     app.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
     app.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
     app.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
-    app.use("/assets", express.static(__dirname + "/app/assets"))
 
     app.set("view engine", "pug")
     app.set("views", __dirname)
 
     app.use(require("express-redis")(6379, "127.0.0.1", {return_buffers: true}, "cache"))
 
-    if (process.env.NODE_ENV === "production") {
+    // if (process.env.NODE_ENV === "production") {
         app.use(require("express-minify")({cache: __dirname + "/cache"}))
         app.use(compression())
-    }
+    // }
 
     let event = new events.EventEmitter()
     event.on("synch", () => {this})
@@ -89,7 +91,7 @@ if (cluster.isMaster) {
         try {
             event.emit("synch",
                 req.cache.set("app",
-                    JSON.stringify(jsonfile.readFileSync(__dirname + `/app/components/${req.params.component}.storage.json`))))
+                    JSON.stringify(jsonfile.readFileSync(application + `/src/components/${req.params.component}.storage.json`))))
         }
 
         catch (err) {
@@ -100,7 +102,7 @@ if (cluster.isMaster) {
         try {
 
             req.cache.get(`${req.params.component}`, (err, storage) => {
-                res.render(__dirname + `/app/components/${req.params.component}.template.pug`, JSON.parse(storage))
+                res.render(application + `/src/components/${req.params.component}.template.pug`, JSON.parse(storage))
             })
         }
         catch (err) {
@@ -113,7 +115,7 @@ if (cluster.isMaster) {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(__dirname + `/app/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(application + `/src/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
             res.json(JSON.parse(storage))
@@ -124,17 +126,29 @@ if (cluster.isMaster) {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(__dirname + `/app/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(application + `/src/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
 
             storage = JSON.parse(storage)
 
+            if (storage.objects.all)
+                res.json(storage.objects.all)
+
             storage.objects.forEach(object => {
 
-                if (req.params.object === "notifications") {
+                if (req.params.object === "data")
+                    if (object.data) res.json(object.data)
+
+                if (req.params.object === "alerts")
+                    if (object.alerts) res.json(object.alerts)
+
+                if (req.params.object === "notifications")
                     if (object.notifications) res.json(object.notifications)
-                }
+
+                if (req.params.object === "history")
+                    if (object.history) res.json(object.history)
+
             })
         })
     })
@@ -213,10 +227,11 @@ if (cluster.isMaster) {
         let git = exec("git rev-parse --short master")
         git = git.toString().trim()
 
-        console.log("Valance - Git: %s @ Processor: %d, Port: %d",
+        console.log("Valance - Git: %s @ Processor: %d, Port: %d Application: %s",
             git,
             cluster.worker.id,
-            process.env.PORT || 8080
+            process.env.PORT || 8080,
+            application
         )
     })
 }
