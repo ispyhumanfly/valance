@@ -1,5 +1,5 @@
 # Valance
-A multi-threaded http server for component-based applications.
+A framework agnostic host for component-based web applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
@@ -13,7 +13,6 @@ Sunt officia excepteur minim commodo commodo est.
 The latest stable release of Valance is available via the Node Package Manager.
 
 ## Global
-
     npm install valance -g
 
 ## Local
