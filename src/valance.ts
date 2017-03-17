@@ -16,7 +16,7 @@ import * as parser from "body-parser"
 
 const jsonfile = require("jsonfile")
 const compression = require("compression")
-const argv = require("yargs")
+const argv = require("yargs").argv
 const shx = require("shelljs")
 
 let name = argv.name || process.env.VALANCE_NAME || "valance"
@@ -47,7 +47,7 @@ if (cluster.isMaster) {
 
     app.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
     app.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
-    app.use("/bootstrap", express.static(__dirname + "../node_modules/jquery/dist"))
+    app.use("/bootstrap", express.static(__dirname + "../node_modules/bootsrap/dist"))
     app.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
     app.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
     app.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
@@ -57,7 +57,7 @@ if (cluster.isMaster) {
     app.use("/", express.static(root + "/assets"))
 
     app.set("view engine", "pug")
-    app.set("views", __dirname)
+    app.set("views", root)
 
     app.use(require("express-redis")(6379, "127.0.0.1", {return_buffers: true}, "cache"))
 
@@ -95,7 +95,7 @@ if (cluster.isMaster) {
 
         try {
             event.emit("synch",
-                req.cache.set("app",
+                req.cache.set(name,
                     JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
         }
 
