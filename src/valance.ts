@@ -16,9 +16,11 @@ import * as parser from "body-parser"
 
 const jsonfile = require("jsonfile")
 const compression = require("compression")
+const sh = require("shelljs")
 const argv = require("yargs")
 
-const root = argv.root || process.env.VALANCE_ROOT || __dirname
+const name = argv.name || process.env.VALANCE_NAME || "valance"
+const root = argv.root || process.env.VALANCE_ROOT || sh.pwd()
 const port = argv.port || process.env.VALANCE_PORT || process.env.PORT || 8080
 const mode = argv.mode || process.env.VALANCE_MODE || process.env.NODE_MODE || "development"
 
