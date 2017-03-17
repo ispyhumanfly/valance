@@ -16,13 +16,13 @@ import * as parser from "body-parser"
 
 const jsonfile = require("jsonfile")
 const compression = require("compression")
-const sh = require("shelljs")
 const argv = require("yargs")
+const shx = require("shelljs")
 
-const name = argv.name || process.env.VALANCE_NAME || "valance"
-const root = argv.root || process.env.VALANCE_ROOT || sh.pwd()
-const port = argv.port || process.env.VALANCE_PORT || process.env.PORT || 8080
-const mode = argv.mode || process.env.VALANCE_MODE || process.env.NODE_MODE || "development"
+let name = argv.name || process.env.VALANCE_NAME || "valance"
+let root = argv.root || process.env.VALANCE_ROOT || shx.pwd()
+let port = argv.port || process.env.VALANCE_PORT || process.env.PORT || 8080
+let mode = argv.mode || process.env.VALANCE_MODE || process.env.NODE_MODE || "development"
 
 if (cluster.isMaster) {
 
@@ -39,27 +39,6 @@ if (cluster.isMaster) {
 
     let app = express()
 
-    app.use(require("express-bunyan-logger")({
-        name: name,
-        streams: [
-            {
-                level: "info",
-                stream: process.stdout
-            },
-            {
-                level: "info",
-                stream: process.stderr
-            },
-            {
-                level: "info",
-                type: "rotating-file",
-                path: __dirname + `/logs/${name}.${process.pid}.json`,
-                period: "1d",
-                count: 365
-            }
-        ],
-    }))
-
     app.use(session({
         secret: crypto.createHash("sha1").digest("hex"),
         resave: false,
@@ -73,9 +52,9 @@ if (cluster.isMaster) {
     app.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
     app.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
 
-    app.use("/assets", express.static(root + "/src/assets"))
-    app.use("/static", express.static(root + "/src/static"))
-    app.use("/", express.static(root + "/src/assets"))
+    app.use("/assets", express.static(root + "/assets"))
+    app.use("/static", express.static(root + "/static"))
+    app.use("/", express.static(root + "/assets"))
 
     app.set("view engine", "pug")
     app.set("views", __dirname)
@@ -83,6 +62,28 @@ if (cluster.isMaster) {
     app.use(require("express-redis")(6379, "127.0.0.1", {return_buffers: true}, "cache"))
 
     if (mode === "production") {
+
+        app.use(require("express-bunyan-logger")({
+            name: name,
+            streams: [
+                {
+                    level: "info",
+                    stream: process.stdout
+                },
+                {
+                    level: "info",
+                    stream: process.stderr
+                },
+                {
+                    level: "info",
+                    type: "rotating-file",
+                    path: __dirname + `/logs/${name}.${process.pid}.json`,
+                    period: "1d",
+                    count: 365
+                }
+            ],
+        }))
+
         app.use(require("express-minify")({cache: __dirname + "/cache"}))
         app.use(compression())
     }
@@ -95,7 +96,7 @@ if (cluster.isMaster) {
         try {
             event.emit("synch",
                 req.cache.set("app",
-                    JSON.stringify(jsonfile.readFileSync(root + `/src/components/${req.params.component}.storage.json`))))
+                    JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
         }
 
         catch (err) {
@@ -106,7 +107,7 @@ if (cluster.isMaster) {
         try {
 
             req.cache.get(`${req.params.component}`, (err, storage) => {
-                res.render(root + `/src/components/${req.params.component}.template.pug`, JSON.parse(storage))
+                res.render(root + `/components/${req.params.component}.template.pug`, JSON.parse(storage))
             })
         }
         catch (err) {
@@ -119,7 +120,7 @@ if (cluster.isMaster) {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(root + `/src/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
             res.json(JSON.parse(storage))
@@ -130,7 +131,7 @@ if (cluster.isMaster) {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(root + `/src/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
 
