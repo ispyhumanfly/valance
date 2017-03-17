@@ -1,10 +1,10 @@
 # Valance
-A framework agnostic host for component-based web applications.
+A library agnostic host for modern web applications.
 
 # Synopsis
 Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
 
-    valance --application /path/to/your/app
+    valance --name appname --root /path/to/your/app
 
 # Installation
 Sunt officia excepteur minim commodo commodo est.
