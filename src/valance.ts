@@ -73,6 +73,7 @@ if (cluster.isMaster) {
 
     app.use("/assets", express.static(root + "/src/assets"))
     app.use("/static", express.static(root + "/src/static"))
+    app.use("/", express.static(root + "/src/assets"))
 
     app.set("view engine", "pug")
     app.set("views", __dirname)
