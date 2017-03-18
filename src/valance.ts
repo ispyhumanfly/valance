@@ -47,7 +47,7 @@ if (cluster.isMaster) {
         saveUninitialized: false
     }))
 
-    app.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
+    app.use("/valance/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
     app.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
     app.use("/bootstrap", express.static(__dirname + "../node_modules/bootsrap/dist"))
     app.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
