@@ -19,8 +19,9 @@
     "valance": "./dist/valance.uglify.js"
   },
   "scripts": {
+    "preinstall": "npm run build",
     "test": "node_modules/.bin/jasmine -w",
-    "build": "rm dist/*.js ; mkdir -p dist/logs/ ; mkdir dist/cache/ ; node_modules/.bin/tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; node_modules/.bin/uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js; chmod +x ./dist/*.js",
+    "build": "rm dist/*.js ; mkdir -p dist/logs/ ; mkdir -p dist/cache/ ; node_modules/.bin/tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; node_modules/.bin/uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js; chmod +x ./dist/*.js",
     "start": "npm run build ; node dist/valance.beautify.js"
   },
   "author": "Dan Stephenson",
@@ -102,6 +103,9 @@
     "watch": "^1.0.1",
     "webcomponents.js": "^0.7.24",
     "x-tag": "^1.5.11",
+    "skatejs": "*",
+    "skatejs-web-webcomponents":"*",
+    "skatejs-react-integration": "*",
     "yargs": "^6.6.0"
   }
 }
