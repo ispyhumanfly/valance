@@ -26,7 +26,7 @@
     "uglifyjs" : "./node_modules/.bin/uglifyjs",
     "postinstall": "npm run typings install ; npm run bundle",
     "test": "jasmine -w",
-    "bundle": "npm run shx mkdir dist/cache/ ; npm run tsc ./src/valance.ts &>/dev/null ; npm run shx mv ./src/valance.js ./dist/valance.transpiled.js ; npm run uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js",
+    "bundle": "mkdir dist/cache/ ; tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js",
     "start": "npm run bundle ; node dist/valance.beautify.js"
   },
   "author": "Dan Stephenson",
