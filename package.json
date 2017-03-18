@@ -104,7 +104,8 @@
     "webcomponents.js": "^0.7.24",
     "x-tag": "^1.5.11",
     "skatejs": "*",
-    "skatejs-web-webcomponents":"*",
+    "skatejs-web-components":"*",
+    "skatejs-template-html":"*",
     "skatejs-react-integration": "*",
     "yargs": "^6.6.0"
   }
