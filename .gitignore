@@ -7,22 +7,19 @@ typings
 *.jsproj
 *.csproj
 *.sln
-dist
 .DS_Store
 .thumbsdb
 .ThumbsDB
 *.rdb
 *.log
 *.swp
-src/main.js
+src/valance.js
 src/logs/
 src/cache/
-src/app/
 *.log
-src/logs/*
 npm-debug*
 *.map
-./index.js
-src/modules/
-src/archportal-interface
+index.js
+dist/*
+!dist/README.md
 
