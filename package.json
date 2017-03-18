@@ -24,9 +24,9 @@
     "typings" : "./node_modules/.bin/typings",
     "jasmine" : "./node_modules/.bin/jasmine",
     "uglifyjs" : "./node_modules/.bin/uglifyjs",
-    "postinstall": "typings install dt~node dt~mime dt~express dt~express-minify dt~express-route-fs dt~express-serve-static-core --global",
-    "test": "npm run jasmine -w",
-    "bundle": "npm run shx mkdir dist/cache/ ; npm run tsc ./src/valance.ts &>/dev/null ; npm run shx mv ./src/valance.js ./dist/valance.transpiled.js ; npm run uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js",
+    "postinstall": "typings install",
+    "test": "jasmine -w",
+    "bundle": "mkdir dist/cache/ ; tsc ./src/valance.ts &>/dev/null ; shx mv ./src/valance.js ./dist/valance.transpiled.js ; uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js",
     "start": "npm run bundle ; node dist/valance.beautify.js"
   },
   "author": "Dan Stephenson",

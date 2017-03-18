@@ -6,9 +6,11 @@
       "removeComments": true,
 	    "experimentalDecorators" : true
   },
+  "files" : [
+    "typings/index.d.ts"
+  ],
   "exclude": [
-      "node_modules",
-      "typings"
+      "node_modules"
   ],
   "compileOnSave": true
 }
