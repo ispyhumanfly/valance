@@ -7,7 +7,7 @@
     "url": "https://github.com/ispyhumanfly/valance.git"
   },
   "preferGlobal": true,
-  "main": "index.js",
+  "main": "./index.js",
   "os": [
     "darwin",
     "linux"
