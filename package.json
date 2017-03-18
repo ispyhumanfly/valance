@@ -19,7 +19,7 @@
     "valance": "./dist/valance.uglify.js"
   },
   "scripts": {
-    "postinstall": "typings install ; npm run bundle",
+    "prepublish": "typings install && npm run bundle",
     "test": "jasmine -w",
     "bundle": "mkdir dist/cache/ ; tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js",
     "start": "npm run bundle ; node dist/valance.beautify.js"
