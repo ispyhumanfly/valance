@@ -19,7 +19,7 @@
     "valance": "./dist/valance.uglify.js"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "preinstall": "npm install shx -g ; shx mkdir -p /usr/local/lib/node_modules/valance/",
     "postinstall": "npm run build",
     "test": "node_modules/.bin/jasmine -w",
     "build": "rm dist/*.js ; mkdir -p dist/logs/ ; mkdir dist/cache/ ; tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; node_modules/.bin/uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js; chmod +x ./dist/*.js",
