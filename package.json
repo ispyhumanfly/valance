@@ -19,10 +19,10 @@
     "valance": "./dist/valance.uglify.js"
   },
   "scripts": {
-    "postinstall": "npm run build",
+    "postinstall": "node_modules/.bin/typings install dt~node dt~mime dt~express-minify dt~express-route-fs dt~express-serve-static-core --global ; npm run compile",
     "test": "node_modules/.bin/jasmine -w",
-    "build": "rm -rf dist/ ; mkdir -p dist/logs/ ; mkdir -p dist/cache/ ; node_modules/.bin/tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; node_modules/.bin/uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js; chmod +x ./dist/*.js",
-    "start": "npm run build ; node dist/valance.beautify.js"
+    "compile": "rm -rf dist/ ; mkdir -p dist/logs/ ; mkdir -p dist/cache/ ; node_modules/.bin/tsc ./src/valance.ts &>/dev/null ; mv ./src/valance.js ./dist/valance.transpiled.js ; node_modules/.bin/uglifyjs ./dist/valance.transpiled.js -b -o ./dist/valance.beautify.js ; node_modules/.bin/uglifyjs ./dist/valance.beautify.js -o ./dist/valance.uglify.js; chmod +x ./dist/*.js",
+    "start": "npm run compile ; node dist/valance.beautify.js"
   },
   "author": "Dan Stephenson",
   "license": "MIT",
