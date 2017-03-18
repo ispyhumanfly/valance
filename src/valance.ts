@@ -16,8 +16,10 @@ import * as parser from "body-parser"
 
 const jsonfile = require("jsonfile")
 const compression = require("compression")
-const argv = require("yargs").argv
 const shx = require("shelljs")
+const pathExists = require("path-exists");
+
+const argv = require("yargs").usage("Usage: $0 --name [appname] -root [/path/to/app/root]").argv
 
 let name = argv.name || process.env.VALANCE_NAME || "valance"
 let root = argv.root || process.env.VALANCE_ROOT || shx.pwd()
@@ -101,6 +103,7 @@ if (cluster.isMaster) {
 
         catch (err) {
             if (err)
+                if(root + `/components/${req.params.component}`
                 res.redirect("/errors")
         }
 
@@ -228,15 +231,15 @@ if (cluster.isMaster) {
 
     const portal = app.listen(port, () => {
 
-        let exec = require("child_process").execSync
-        let git = exec("git rev-parse --short master")
-        git = git.toString().trim()
+        // let exec = require("child_process").execSync
+        // let git = exec("git rev-parse --short master")
+        // git = git.toString().trim()
 
-        console.log("Valance - Git: %s @ Processor: %d, Port: %d, Root: %s",
-            git,
+        console.log("Valance: Thread %s, Name: %s, Root: %s, Port: %d",
             cluster.worker.id,
-            port,
-            root
+            name,
+            root,
+            port
         )
     })
 }
