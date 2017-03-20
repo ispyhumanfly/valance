@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /// <reference path="../typings/index.d.ts" />
 
 /* tslint:enable */
@@ -8,23 +7,22 @@
 import * as events from "events"
 import * as crypto from "crypto"
 import * as cluster from "cluster"
+import * as express from "express"
+import * as parser from "body-parser"
 import * as os from "os"
 import * as fs from "fs"
-import * as express from "express"
-import * as session from "express-session"
-import * as parser from "body-parser"
 
+const session = require("express-session")
 const jsonfile = require("jsonfile")
 const compression = require("compression")
 const shx = require("shelljs")
-const pathExists = require("path-exists");
 
-const argv = require("yargs").usage("Usage: $0 --name [appname] -root [/path/to/app/root]").argv
+const argv = require("yargs").argv
 
-let name = argv.name || process.env.VALANCE_NAME || "valance"
-let root = argv.root || process.env.VALANCE_ROOT || shx.pwd()
-let port = argv.port || process.env.VALANCE_PORT || process.env.PORT || 8080
-let mode = argv.mode || process.env.VALANCE_MODE || process.env.NODE_MODE || "development"
+let name = argv.name || process.env.VALANCE_APP_NAME || process.env.HOSTNAME || "localhost"
+let home = argv.home || process.env.VALANCE_APP_HOME || shx.pwd()
+let port = argv.port || process.env.VALANCE_APP_PORT || process.env.PORT || 8080
+let mode = argv.mode || process.env.VALANCE_APP_MODE || process.env.NODE_MODE || "development"
 
 if (cluster.isMaster) {
 
@@ -39,33 +37,36 @@ if (cluster.isMaster) {
 
 } else {
 
-    let app = express()
+    let valance = express()
 
-    app.use(session({
+    valance.use(session({
         secret: crypto.createHash("sha1").digest("hex"),
         resave: false,
         saveUninitialized: false
     }))
 
-    app.use("/valance/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
-    app.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
-    app.use("/bootstrap", express.static(__dirname + "../node_modules/bootsrap/dist"))
-    app.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
-    app.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
-    app.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
+    valance.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
+    valance.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
+    valance.use("/bootstrap", express.static(__dirname + "../node_modules/bootsrap/dist"))
+    valance.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
+    valance.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
+    valance.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
 
-    app.use("/assets", express.static(root + "/assets"))
-    app.use("/static", express.static(root + "/static"))
-    app.use("/", express.static(root + "/assets"))
+    valance.use("/assets", express.static(home + "/assets"))
+    valance.use("/static", express.static(home + "/static"))
+    valance.use("/", express.static(home + "/assets"))
 
-    app.set("view engine", "pug")
-    app.set("views", root)
+    valance.set("view engine", "pug")
+    valance.set("views", home)
 
-    app.use(require("express-redis")(6379, "127.0.0.1", {return_buffers: true}, "cache"))
+    valance.use(require("express-redis")(6379, "127.0.0.1", {return_buffers: true}, "cache"))
 
     if (mode === "production") {
 
-        app.use(require("express-bunyan-logger")({
+        if (!fs.existsSync(home + "/cache/")) shx.mkdir(home + "/cache/")
+        if (!fs.existsSync(home + "/logs/")) shx.mkdir(home + "/logs/")
+
+        valance.use(require("express-bunyan-logger")({
             name: name,
             streams: [
                 {
@@ -79,38 +80,38 @@ if (cluster.isMaster) {
                 {
                     level: "info",
                     type: "rotating-file",
-                    path: __dirname + `/logs/${name}.${process.pid}.json`,
+                    path: home + `/logs/${name}.${process.pid}.json`,
                     period: "1d",
                     count: 365
                 }
             ],
         }))
 
-        app.use(require("express-minify")({cache: __dirname + "/cache"}))
-        app.use(compression())
+        valance.use(require("express-minify")({cache: home + "/cache"}))
+        valance.use(compression())
     }
 
     let event = new events.EventEmitter()
     event.on("synch", () => {this})
 
-    app.get("/:component", parser.urlencoded({ extended: true }), (req, res, next) => {
+    valance.get("/:component", parser.urlencoded({ extended: true }), (req, res, next) => {
 
         try {
             event.emit("synch",
                 req.cache.set(name,
-                    JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
+                    JSON.stringify(jsonfile.readFileSync(home + `/components/${req.params.component}.storage.json`))))
         }
 
         catch (err) {
             if (err)
-                if(root + `/components/${req.params.component}`
+                if (home + `/components/${req.params.component}`
                 res.redirect("/errors")
         }
 
         try {
 
             req.cache.get(`${req.params.component}`, (err, storage) => {
-                res.render(root + `/components/${req.params.component}.template.pug`, JSON.parse(storage))
+                res.render(home + `/components/${req.params.component}.template.pug`, JSON.parse(storage))
             })
         }
         catch (err) {
@@ -119,22 +120,22 @@ if (cluster.isMaster) {
         }
     })
 
-    app.get("/:component/storage/objects.json", (req, res, next) => {
+    valance.get("/:component/storage/objects.json", (req, res, next) => {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(home + `/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
             res.json(JSON.parse(storage))
         })
     })
 
-    app.get("/:component/storage/:object/objects.json", (req, res, next) => {
+    valance.get("/:component/storage/:object/objects.json", (req, res, next) => {
 
         event.emit("synch",
             req.cache.set(req.params.component,
-                JSON.stringify(jsonfile.readFileSync(root + `/components/${req.params.component}.storage.json`))))
+                JSON.stringify(jsonfile.readFileSync(home + `/components/${req.params.component}.storage.json`))))
 
         req.cache.get(req.params.component, (err, storage) => {
 
@@ -161,12 +162,12 @@ if (cluster.isMaster) {
         })
     })
 
-    app.all("*", (req, res, next) => {
+    valance.all("*", (req, res, next) => {
         res.redirect("/index")
     })
 
     /*
-    app.get("/access", (req, res, next) => {
+    valance.get("/access", (req, res, next) => {
 
         event.emit("synch",
             req.cache.set("access",
@@ -229,16 +230,16 @@ if (cluster.isMaster) {
     })
     */
 
-    const portal = app.listen(port, () => {
+    const portal = valance.listen(port, () => {
 
         // let exec = require("child_process").execSync
         // let git = exec("git rev-parse --short master")
         // git = git.toString().trim()
 
-        console.log("Valance: Thread %s, Name: %s, Root: %s, Port: %d",
+        console.log("Valance - ID: %s, Name: %s, Home: %s, Port: %d",
             cluster.worker.id,
             name,
-            root,
+            home,
             port
         )
     })

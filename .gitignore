@@ -22,6 +22,5 @@ npm-debug*
 *.map
 index.js
 dist/*
-!dist/README.md
 !dist/valance*
 

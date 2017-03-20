@@ -2,7 +2,7 @@
   "compilerOptions": {
       "target": "es5",
       "module": "es2015",
-      "sourceMap": true,
+      "sourceMap": false,
       "removeComments": true,
 	    "experimentalDecorators" : true
   },
@@ -10,7 +10,9 @@
     "typings/index.d.ts"
   ],
   "exclude": [
-      "node_modules"
+      "node_modules",
+      "dist",
+      "spec"
   ],
-  "compileOnSave": true
+  "compileOnSave": false
 }
