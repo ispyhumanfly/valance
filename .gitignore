@@ -14,9 +14,7 @@ typings/*
 *.rdb
 *.log
 *.swp
-src/valance.js
-src/logs/
-src/cache/
+src/*.js
 *.log
 npm-debug*
 *.map

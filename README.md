@@ -1,13 +1,13 @@
 # Valance
-A library agnostic host for modern web applications.
+A fast and flexible framework for powering component-based web applications.
 
 # Synopsis
-Fugiat velit sunt tempor aliquip cupidatat consequat id labore nostrud mollit Lorem officia est labore.
+Power your component-based application using the valance application server.
 
-    valance --name appname --root /path/to/your/app
+    valance --name appname --home /path/to/your/app --port 8080
 
 # Installation
-Sunt officia excepteur minim commodo commodo est.
+Valance can easily be installed using various methods.
 
 # NPM
 The latest stable release of Valance is available via the Node Package Manager.

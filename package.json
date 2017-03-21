@@ -24,6 +24,9 @@
     "build_lib": "node_modules/.bin/tsc ./src/valance.lib.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.lib.js -b -o ./src/valance.lib.js ; node_modules/.bin/uglifyjs ./src/valance.lib.js -o ./dist/valance.lib.js",
     "build_spec": "node_modules/.bin/tsc ./src/valance.spec.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.spec.js -b -o ./src/valance.spec.js ; node_modules/.bin/uglifyjs ./src/valance.spec.js -o ./spec/valance.spec.js",
     "test": "node_modules/.bin/jasmine -w",
+    "release:major": "node_modules/.bin/shelljs-release major",
+    "release:minor": "node_modules/.bin/shelljs-release minor",
+    "release:patch": "node_modules/.bin/shelljs-release patch",
     "start": "npm run prepublish ; node dist/valance.cli.js"
   },
   "author": "Dan Stephenson",
@@ -106,9 +109,12 @@
     "webcomponents.js": "^0.7.24",
     "x-tag": "^1.5.11",
     "skatejs": "*",
-    "skatejs-web-components":"*",
-    "skatejs-template-html":"*",
+    "skatejs-web-components": "*",
+    "skatejs-template-html": "*",
     "skatejs-react-integration": "*",
     "yargs": "^6.6.0"
+  },
+  "devDependencies": {
+    "shelljs-release": "^0.2.0"
   }
 }
