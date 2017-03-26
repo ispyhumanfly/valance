@@ -2,7 +2,7 @@
 A cross-framework platform for developing component-based web applications.
 
 # Synopsis
-Power your component-based application using the valance application server.
+Power your web componenents using the Valance application server.
 
     valance --name appname --home /path/to/your/app --port 8080
 
