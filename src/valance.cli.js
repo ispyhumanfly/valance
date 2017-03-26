@@ -31,7 +31,7 @@ var argv = require("yargs").argv;
 
 var name = argv.name || process.env.VALANCE_APP_NAME || process.env.HOSTNAME || "localhost";
 
-var home = argv.home || process.env.VALANCE_APP_HOME || process.cwd;
+var home = argv.home || process.env.VALANCE_APP_HOME || shx.pwd();
 
 var port = argv.port || process.env.VALANCE_APP_PORT || process.env.PORT || 8080;
 
