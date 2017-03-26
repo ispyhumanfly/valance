@@ -47,13 +47,7 @@ if (cluster.isMaster) {
         saveUninitialized: false
     }))
 
-    valance.use("/jquery", express.static(__dirname + "../node_modules/jquery/dist"))
-    valance.use("/jquery-ui", express.static(__dirname + "../node_modules/jquery-ui-dist"))
-    valance.use("/bootstrap", express.static(__dirname + "../node_modules/bootsrap/dist"))
-    valance.use("/bluebird", express.static(__dirname + "../node_modules/bluebird/js/browser"))
-    valance.use("/webcomponents.js", express.static(__dirname + "../node_modules/webcomponents.js"))
-    valance.use("/x-tag", express.static(__dirname + "../node_modules/x-tag/dist"))
-
+    valance.use("/valance_modules", express.static(__dirname + "../node_modules"))
     valance.use("/assets", express.static(home + "/assets"))
     valance.use("/static", express.static(home + "/static"))
     valance.use("/", express.static(home + "/assets"))
