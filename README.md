@@ -34,13 +34,13 @@ The source code is available on GitHub.
 # Examples
 There is still much to be desired in the way of documentation. Below I've made available some of the Valance applications that I'm creating for various customers of mine, and, I hope for now can serve as a starting point. Please ask me questions!
 
-## Dtownmom
+### Dtownmom
 [https://github.com/ispyhumanfly/dtownmom]
 
-## Cabbage Patch Saloon
+### Cabbage Patch Saloon
 [https://github.com/ispyhumanfly/cabbagepatchsaloon]
 
-## Silver Gate Lending
+### Silver Gate Lending
 [https://github.com/ispyhumanfly/silvergetlending]
 
 # Author
