@@ -31,7 +31,7 @@ var argv = require("yargs").argv;
 
 var name = argv.name || process.env.VALANCE_APP_NAME || process.env.HOSTNAME || "localhost";
 
-var home = argv.home || process.env.VALANCE_APP_HOME || shx.pwd();
+var home = argv.home || process.env.VALANCE_APP_HOME || process.cwd;
 
 var port = argv.port || process.env.VALANCE_APP_PORT || process.env.PORT || 8080;
 
@@ -128,6 +128,6 @@ if (cluster.isMaster) {
         res.redirect("/index");
     });
     var portal = valance.listen(port, function() {
-        console.log("Valance - ID: %s, Name: %s, Home: %s, Port: %d", cluster.worker.id, name, home, port);
+        console.log("Valance - Core: %s, Process: %sd, Name: %s, Home: %s, Port: %d", cluster.worker.id, process.pid, name, home, port);
     });
 }
