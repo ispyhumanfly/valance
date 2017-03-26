@@ -232,8 +232,9 @@ if (cluster.isMaster) {
         // let git = exec("git rev-parse --short master")
         // git = git.toString().trim()
 
-        console.log("Valance - ID: %s, Name: %s, Home: %s, Port: %d",
+        console.log("Valance - Core: %s, Process: %sd, Name: %s, Home: %s, Port: %d",
             cluster.worker.id,
+            process.pid,
             name,
             home,
             port
