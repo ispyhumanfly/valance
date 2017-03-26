@@ -19,6 +19,4 @@ src/*.js
 npm-debug*
 *.map
 index.js
-dist/*
-!dist/valance*
 
