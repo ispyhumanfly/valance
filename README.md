@@ -1,5 +1,5 @@
 # Valance
-A fast and flexible framework for powering component-based web applications.
+A cross-framework platform for developing component-based web applications.
 
 # Synopsis
 Power your component-based application using the valance application server.
