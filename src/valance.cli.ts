@@ -22,7 +22,7 @@ const shx = require("shelljs")
 const argv = require("yargs").argv
 
 let name = argv.name || process.env.VALANCE_APP_NAME || process.env.HOSTNAME || "localhost"
-let home = argv.home || process.env.VALANCE_APP_HOME || shx.pwd()
+let home = argv.home || process.env.VALANCE_APP_HOME || process.cwd
 let port = argv.port || process.env.VALANCE_APP_PORT || process.env.PORT || 8080
 let mode = argv.mode || process.env.VALANCE_APP_MODE || process.env.NODE_MODE || "development"
 
