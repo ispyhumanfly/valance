@@ -7,7 +7,7 @@
     "url": "https://github.com/ispyhumanfly/valance.git"
   },
   "preferGlobal": true,
-  "main": "./dist/valance.lib.js",
+  "main": "./index.js",
   "os": [
     "darwin",
     "linux"
@@ -19,7 +19,8 @@
     "valance": "./dist/valance.cli.js"
   },
   "scripts": {
-    "prepublish": "typings install && npm run build_cli && npm run build_spec && npm run build_lib && npm run test",
+    "prepublish": "typings install && npm run build_index && npm run build_cli && npm run build_spec && npm run build_lib && npm run test",
+    "build_index": "node_modules/.bin/tsc ./src/index.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.cli.js -b -o ./src/index.js ; node_modules/.bin/uglifyjs ./src/index.js -o ./index.js",
     "build_cli": "node_modules/.bin/tsc ./src/valance.cli.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.cli.js -b -o ./src/valance.cli.js ; node_modules/.bin/uglifyjs ./src/valance.cli.js -o ./dist/valance.cli.js",
     "build_lib": "node_modules/.bin/tsc ./src/valance.lib.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.lib.js -b -o ./src/valance.lib.js ; node_modules/.bin/uglifyjs ./src/valance.lib.js -o ./dist/valance.lib.js",
     "build_spec": "node_modules/.bin/tsc ./src/valance.spec.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.spec.js -b -o ./src/valance.spec.js ; node_modules/.bin/uglifyjs ./src/valance.spec.js -o ./spec/valance.spec.js",
@@ -39,6 +40,7 @@
     "bunyan": "^1.8.4",
     "compression": "^1.6.2",
     "connect-redis": "^3.1.0",
+    "core-js": "^2.4.1",
     "errorhandler": "^1.5.0",
     "events": "^1.1.1",
     "express": "^4.14.0",
@@ -95,11 +97,18 @@
     "rxjs": "^5.2.0",
     "semver": "^5.3.0",
     "shx": "^0.2.0",
+    "skatejs": "*",
+    "skatejs-react-integration": "*",
+    "skatejs-template-html": "*",
+    "skatejs-web-components": "*",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "symbol": "^0.3.0",
     "ts-dependency-injection": "^1.2.2",
+    "ts-node": "^3.0.2",
     "tslint": "^3.15.1",
+    "tslint-config-standard": "^4.0.0",
+    "typedoc": "^0.5.9",
     "typescript": "^2.0.6",
     "typescript-compiler": "^1.4.1-2",
     "typings": "^1.5.0",
@@ -108,10 +117,6 @@
     "watch": "^1.0.1",
     "webcomponents.js": "^0.7.24",
     "x-tag": "^1.5.11",
-    "skatejs": "*",
-    "skatejs-web-components": "*",
-    "skatejs-template-html": "*",
-    "skatejs-react-integration": "*",
     "yargs": "^6.6.0"
   },
   "devDependencies": {

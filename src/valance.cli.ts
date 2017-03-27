@@ -100,8 +100,7 @@ if (cluster.isMaster) {
 
         catch (err) {
             if (err)
-                if (home + `/components/${req.params.component}`
-                res.redirect("/errors")
+                if (home + `/components/${req.params.component}`) res.redirect("/errors")
         }
 
         try {
