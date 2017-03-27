@@ -4,5 +4,4 @@
 
 "use strict";
 
-import * as Valance from "./dist/valance.lib.js"
-export { Valance }
+export * as Valance from "./dist/valance.lib.js"
