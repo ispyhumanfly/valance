@@ -11,9 +11,9 @@
 
   },
   "files" : [
-    "src/valance.cli.ts",
-    "src/valance.lib.ts",
-    "src/valance.spec.ts"
+    "./src/valance.cli.ts",
+    "./src/valance.lib.ts",
+    "./src/valance.spec.ts"
   ],
   "exclude": [
       "node_modules",
