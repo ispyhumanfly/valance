@@ -1,7 +1,7 @@
 {
   "name": "valance",
   "version": "0.0.1",
-  "description": "A scalable framework for the rapid development and deployment of cross-platform applications.",
+  "description": "A cross-framework platform for developing component-based web applications.",
   "repository": {
     "type": "git",
     "url": "https://github.com/ispyhumanfly/valance.git"
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "prepublish": "typings install && npm run build_index && npm run build_cli && npm run build_spec && npm run build_lib && npm run test",
-    "build_index": "node_modules/.bin/tsc ./src/index.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.cli.js -b -o ./src/index.js ; node_modules/.bin/uglifyjs ./src/index.js -o ./index.js",
+    "build_index": "node_modules/.bin/tsc ./src/index.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/index.js -b -o ./src/index.js ; node_modules/.bin/uglifyjs ./src/index.js -o ./index.js",
     "build_cli": "node_modules/.bin/tsc ./src/valance.cli.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.cli.js -b -o ./src/valance.cli.js ; node_modules/.bin/uglifyjs ./src/valance.cli.js -o ./dist/valance.cli.js",
     "build_lib": "node_modules/.bin/tsc ./src/valance.lib.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.lib.js -b -o ./src/valance.lib.js ; node_modules/.bin/uglifyjs ./src/valance.lib.js -o ./dist/valance.lib.js",
     "build_spec": "node_modules/.bin/tsc ./src/valance.spec.ts &>/dev/null ; node_modules/.bin/uglifyjs ./src/valance.spec.js -b -o ./src/valance.spec.js ; node_modules/.bin/uglifyjs ./src/valance.spec.js -o ./spec/valance.spec.js",

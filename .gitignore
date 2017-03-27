@@ -17,5 +17,4 @@ typings/*
 *.log
 npm-debug*
 *.map
-index.js
 
