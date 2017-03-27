@@ -1,8 +1,14 @@
 "use strict";
-const tsc = require("typescript-compiler");
-class Valance {
-    constructor(options) {
-        tsc.compile(["./src/valance.ts"], ["--out", "./dist/main.js"]);
+
+exports.__esModule = true;
+
+var tsc = require("typescript-compiler");
+
+var Valance = function() {
+    function Valance(options) {
+        tsc.compile([ "./src/valance.ts" ], [ "--out", "./dist/main.js" ]);
     }
-}
+    return Valance;
+}();
+
 exports.Valance = Valance;
