@@ -2,7 +2,7 @@
 A cross-framework platform for developing component-based web applications. Valance provides a highly scalable, and easy to use environment for rapidly developing and deliverying modern web applications. This is still in Alpha, and although stable, still needs certain features finalized.
 
 # Synopsis
-Host your web componenents using the Valance application server.
+Power your web components using the Valance application server.
 
     valance --name appname --home /path/to/your/app --port 8080
 

@@ -101,16 +101,11 @@
     "skatejs-react-integration": "*",
     "skatejs-template-html": "*",
     "skatejs-web-components": "*",
-    "style-loader": "^0.16.1",
     "stylus": "^0.54.5",
     "symbol": "^0.3.0",
-    "ts-dependency-injection": "^1.2.2",
-    "ts-node": "^3.0.2",
     "tslint": "^5.0.0",
-    "tslint-config-standard": "^4.0.0",
     "typedoc": "^0.5.9",
     "typescript": "^2.0.6",
-    "typescript-compiler": "^1.4.1-2",
     "typings": "^2.1.0",
     "uglify": "^0.1.5",
     "uglify-js": "^2.7.4",
@@ -120,6 +115,10 @@
     "yargs": "^7.0.2"
   },
   "devDependencies": {
-    "shelljs-release": "^0.2.0"
+    "shelljs-release": "^0.2.0",
+    "tslint-config-standard": "^4.0.0",
+    "typescript-compiler": "^1.4.1-2",
+    "ts-dependency-injection": "^1.2.2",
+    "ts-node": "^3.0.2"
   }
 }
