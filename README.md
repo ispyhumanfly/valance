@@ -1,5 +1,5 @@
 # Valance
-A cross-framework platform for developing component-based web applications. Valance provides a highly scalable, and easy to use environment for rapidly developing and deliverying modern web applications. This is still in Alpha, and although stable, still needs certain features finalized.
+A fast and flexible technology for making cross-platform applications. Valance provides a highly scalable, and easy to use environment for rapidly developing and deliverying modern web, mobile and desktop applications.
 
 # Synopsis
 Power your web components using the Valance application server.
