@@ -4,15 +4,13 @@
 
 "use strict";
 
-const tsc = require("typescript-compiler")
-
 export class Valance {
 
-    public options: Object
+    public params: Object
 
-    constructor (options: Object) {
+    constructor (params: Object) {
 
-        tsc.compile(["./src/valance.ts"], ["--out", "./dist/main.js"])
-
+        let exec = require("child_process").execSync
+        let valance_cli = exec(`node valance.cli.js --name ${params.name} `)
     }
 }
